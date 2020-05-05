@@ -2,23 +2,20 @@
 Multicircular view
 */
 
-
 inlets = 1;
-outlets = 2;
+outlets = 4;
 
 border = 0;
 
 var gdebug = 0;
-var bgcolor = [0, 0, 0, 0];
-var stepcolor0 = [80/255, 85/255, 105/255, 1];
-var stepcolor1 = [186/255, 190/255, 193/255, 1];
 
-var activecolor0 = [241/255, 173/255, 45/255, 1];
-var activecolor1 = [241/255, 173/255, 45/255, 1];
-var activecolor2 = [241/255, 173/255, 45/255, 1];
-var activecolor3 = [241/255, 173/255, 45/255, 1];
+var bgcolor = [0, 0, 0, 0]; // global background color = default is transparent
+var fillcolor = [45/255, 45/255, 65/255, 1]; // frame fill bg color
 
-var circbgcolor = [45/255, 45/255, 65/255, 1];
+var stepcolor0 = [80/255, 85/255, 105/255, 1]; // step off color
+var stepcolor1 = [186/255, 190/255, 193/255, 1]; // step pulse color
+var activecolor = [241/255, 173/255, 45/255, 1]; // step active color
+var showindex = -1; // experimental.
 var npadding = 0.01;
 var thickness = 1;
 var innerarea = 0.83; // 0.9
@@ -28,8 +25,9 @@ var spacing = 1.51; // 1.0
 var offthicknessmul = 1.0; // thickness multiplier when the node is off.
 
 declareattribute("bgcolor");
+declareattribute("showindex");
 declareattribute("gdebug");
-declareattribute("circbgcolor");
+declareattribute("fillcolor");
 declareattribute("npadding");
 declareattribute("thickness");
 declareattribute("spacing");
@@ -374,8 +372,8 @@ function CircObject (numSteps, numPulses, spread)
 	this.active = true;
 	this.offcolor = copyColor(stepcolor0);
 	this.oncolor = copyColor(stepcolor1);
-	this.activecolor = copyColor(activecolor0);
-	this.drawstepmode = drawstepmode;
+	this.activecolor = copyColor(activecolor);
+	this.drawstepmode = drawstepmode
 	this.offthicknessmul = offthicknessmul; // divide thickness for off nodes
 }
 
@@ -400,7 +398,7 @@ CircObject.prototype.createFrom = function (steps, pulses, spread)
 		for (var i = 0; i < steps; ++i)
 			narray[i] = i < pulses ? 1 : 0;
 	}
-	post(narray, '\n');
+	//post(narray, '\n');
 	return narray;
 }
 
@@ -417,7 +415,7 @@ CircObject.prototype.rebuild = function ()
 {
 	if (this.changed == 1)
 	{
-		post("rebuild object\n");
+		//post("rebuild object\n");
 		const HalfPi = Math.PI * 0.5;
 		const TwoPi = Math.PI * 2;
 		const sides = this.activations.length;
@@ -566,14 +564,28 @@ if (CircObjectsContainer.length < 1) {
 	add(16, 4, true);
 }
 
+function setactivations (l)
+{
+	const args = arrayfromargs(arguments);
+	const sequence = args[0];
+	const activations = args.slice(1);
+	//post(activations+"\n");
+
+	var current = prGetSequence(sequence);
+	if (current !== undefined) {
+		current.activations = activations;
+		current.changed = 1;
+		outlet(sequence, "activation", activations);
+	}
+}
+
 function list()
 {
 	var a = arrayfromargs(arguments);
 	if (a.length > 0) 
 	{
-		post(a[0], '\n');
+		a.forEach(function (x, i) {post(""+i+":"+x+"\n");});
 	}
-	mgraphics.redraw();
 }
 
 function map (x, min, max, omin, omax)
@@ -583,17 +595,6 @@ function map (x, min, max, omin, omax)
 
 function clear() {
 	CircObjectsContainer = [];
-	mgraphics.redraw();
-}
-
-function setsteps(numSteps, sequence)
-{
-
-}
-
-function setpulses(numPulses, sequence)
-{
-	
 }
 
 function setoffthicknessmul(number, idx)
@@ -606,16 +607,43 @@ function setoffthicknessmul(number, idx)
 	else 
 	{
 		var current = prGetSequence(idx);
-		current.offthicknessmul = number;
+		if (current !== undefined)
+			current.offthicknessmul = number;
 	}
-	mgraphics.redraw();	
 }
 
 function setindex(idx, sequence)
 {
 	var current = prGetSequence(sequence);
-	current.setStepIndex(idx);
-	mgraphics.redraw();	
+	if (current !== undefined)
+	{
+		current.setStepIndex(idx);
+		outlet(sequence, "index", current.stepIndex);
+	}
+}
+
+function advance(sequence)
+{
+	if (sequence == "all")
+	{
+		CircObjectsContainer.forEach(function(current, i) {
+			if (current.active) {
+				current.setStepIndex(current.stepIndex+1);
+				outlet(i, "index", current.stepIndex);
+			}
+		});
+	}
+	else 
+	{
+		if (sequence === undefined)
+			sequence = 0;
+
+		var current = prGetSequence(sequence);
+		if (current !== undefined && current.active) {
+			current.setStepIndex(current.stepIndex+1);
+			outlet(sequence, "index", current.stepIndex);
+		}
+	}
 }
 
 function setdrawmode(mode, idx) {
@@ -627,14 +655,15 @@ function setdrawmode(mode, idx) {
 	else 
 	{
 		var current = prGetSequence(idx);
-		current.drawstepmode = mode;
+		if (current !== undefined)
+			current.drawstepmode = mode;
 	}
-	mgraphics.redraw();	
 }
 
 function prGetSequence(sequence)
 {
-	sequence = (sequence === undefined) ? 0 : Math.min (Math.max(0, sequence), CircObjectsContainer.length-1);
+	sequence = (sequence === undefined) ? 0 : Math.max(0, sequence);
+	if (sequence >= CircObjectsContainer.length) return undefined;
 	return CircObjectsContainer [sequence];
 }
 
@@ -643,7 +672,9 @@ prGetSequence.local = 1;
 function getstepindex(sequence)
 {
 	var current = prGetSequence(sequence);
-	outlet(0, "stepindex", current.stepIndex);
+	if (current !== undefined) {
+		outlet(sequence, "stepindex", current.stepIndex);
+	}
 }
 
 function setactive(sequence, yorn, deactivateAll)
@@ -658,20 +689,71 @@ function setactive(sequence, yorn, deactivateAll)
 	else 
 	{
 		var current = prGetSequence(sequence);
-		current.active = yorn;
+		if (current !== undefined) {
+			current.active = yorn;
+		}
 	}
-	
-	mgraphics.redraw();	
 }
 
-function setactivecolor(sequence, r, g, b, a)
+function setpulsecolor(r, g, b, a, sequence)
 {
-	var current = prGetSequence(sequence);
-	current.activecolor[0] = r;
-	current.activecolor[1] = g;
-	current.activecolor[2] = b;
-	current.activecolor[3] = (a === undefined ? 1 : a);
-	mgraphics.redraw();
+	if (sequence === undefined)
+	{
+		stepcolor1 = [r, g, b, a];
+		CircObjectsContainer.forEach(function (x, i){
+			x.oncolor = [r, g, b, a];
+		});
+	}
+	else 
+	{
+		var current = prGetSequence(sequence);
+		if (current !== undefined)
+			current.oncolor = [r, g, b, a];
+	}
+}
+
+function setoffcolor(r, g, b, a, sequence)
+{
+	if (sequence === undefined)
+	{
+		stepcolor0 = [r, g, b, a];
+		CircObjectsContainer.forEach(function (x, i){
+			x.offcolor = [r, g, b, a];
+		});
+	}
+	else 
+	{
+		var current = prGetSequence(sequence);
+		if (current !== undefined)
+			current.offcolor = [r, g, b, a];
+	}
+}
+
+function setfillcolor (r, g, b, a)
+{
+	fillcolor = [r, g, b, a];
+}
+
+function setbgcolor (r, g, b, a)
+{
+	bgcolor = [r, g, b, a];
+}
+
+function setactivecolor(r, g, b, a, sequence)
+{
+	if (sequence === undefined)
+	{
+		activecolor = [r, g, b, a];
+		CircObjectsContainer.forEach(function (x, i){
+			x.activecolor = [r, g, b, a];
+		});
+	}
+	else 
+	{
+		var current = prGetSequence(sequence);
+		if (current !== undefined)
+			current.activecolor = [r, g, b, a];
+	}
 }
 
 function add(numSteps, numPulses, spread) 
@@ -683,7 +765,6 @@ function add(numSteps, numPulses, spread)
 		//nobj.active = (numContainers == 0);
 		CircObjectsContainer.push(nobj);
 	}
-	mgraphics.redraw();
 }
 
 function pop() 
@@ -692,7 +773,6 @@ function pop()
 	{
 		CircObjectsContainer.pop();
 	}
-	mgraphics.redraw();
 }
 
 function onclick(x,y) 
@@ -706,7 +786,7 @@ function paint()
 	const RadiusDivider = 8;
 
 	const backgroundColor = p5.color(bgcolor[0], bgcolor[1], bgcolor[2], bgcolor[3]);
-	const circlecolor = p5.color(circbgcolor[0], circbgcolor[1], circbgcolor[2], circbgcolor[3]);
+	const circlecolor = p5.color(fillcolor[0], fillcolor[1], fillcolor[2], fillcolor[3]);
 
 	// global code
 	p5.update();
@@ -719,7 +799,8 @@ function paint()
 
 	p5.noStroke();
 	p5.fill (circlecolor);
-	p5.circle(0, 0, radius);
+	if (circlecolor.a > 0)
+		p5.circle(0, 0, radius);
 
 	// object code
 
@@ -736,6 +817,16 @@ function paint()
 		o.draw ();
 		cradius -= radonsize;
 	};
+
+	if (showindex > -1 && showindex < maxsize)
+	{
+		var o = CircObjectsContainer[showindex];
+		if (o !== undefined) {
+			p5.textSize(cradius * 0.6);
+			p5.fill(p5.color(stepcolor1[0], stepcolor1[1], stepcolor1[2], stepcolor1[3]));
+			p5.text(""+(o.stepIndex)+"|"+o.activations.length, 0, 0);
+		}
+	}
 }
 
 function bang() 
