@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 49.0, 89.0, 941.0, 861.0 ],
+		"rect" : [ 34.0, 153.0, 635.0, 688.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -38,6 +38,120 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-16",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 416.0, 66.0, 150.0, 20.0 ],
+					"text" : "commands list"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"color" : [ 0.996078431372549, 0.419607843137255, 0.419607843137255, 1.0 ],
+					"id" : "obj-14",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"patcher" : 					{
+						"fileversion" : 1,
+						"appversion" : 						{
+							"major" : 8,
+							"minor" : 1,
+							"revision" : 3,
+							"architecture" : "x64",
+							"modernui" : 1
+						}
+,
+						"classnamespace" : "box",
+						"rect" : [ 413.0, 178.0, 854.0, 675.0 ],
+						"bglocked" : 0,
+						"openinpresentation" : 0,
+						"default_fontsize" : 12.0,
+						"default_fontface" : 0,
+						"default_fontname" : "Arial",
+						"gridonopen" : 1,
+						"gridsize" : [ 15.0, 15.0 ],
+						"gridsnaponopen" : 1,
+						"objectsnaponopen" : 1,
+						"statusbarvisible" : 2,
+						"toolbarvisible" : 1,
+						"lefttoolbarpinned" : 0,
+						"toptoolbarpinned" : 0,
+						"righttoolbarpinned" : 0,
+						"bottomtoolbarpinned" : 0,
+						"toolbars_unpinned_last_save" : 0,
+						"tallnewobj" : 0,
+						"boxanimatetime" : 200,
+						"enablehscroll" : 1,
+						"enablevscroll" : 1,
+						"devicewidth" : 0.0,
+						"description" : "",
+						"digest" : "",
+						"tags" : "",
+						"style" : "",
+						"subpatcher_template" : "",
+						"boxes" : [ 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 11.595186999999999,
+									"id" : "obj-5",
+									"linecount" : 7,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 28.0, 335.0, 431.0, 97.0 ],
+									"text" : "COLORS :\n\nsetbgcolor <r, g, b, a> : background color (def.: transparent)\nsetfillcolor <r, g, b, a> : frame fill color (the circle frame color)\nsetoffcolor <r, g, b, a> : step off color\nsetpulsecolor <r, g, b, a> : pulse step color\nsetactivecolor <r, g, b, a> : active pulse step color"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 11.595186999999999,
+									"id" : "obj-4",
+									"linecount" : 8,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 28.0, 205.0, 431.0, 110.0 ],
+									"text" : "DISPLAY :\n\nsetdrawmode <mode (0 | 1)> (0 = rectangular, 1 = circles)\nspacing <amount (float)>\nthickness <amount (float)>\ninnerarea <amount (float)>\nsetoffthicknessmul <amount (float)>\nroundcorners <yorn (0|1> (works only in 'rectangular' drawmode)"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontname" : "Arial",
+									"fontsize" : 11.595186999999999,
+									"id" : "obj-10",
+									"linecount" : 11,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 28.0, 29.0, 713.0, 162.0 ],
+									"text" : "PATTERNS :\n\nclear\nadd (add a default pattern of : 16 4 0)\radd <numsteps (number)> <numpulses (number)> <spread_pulses_or_not (0|1)>;\rpop (pop and remove the last element)\n\nsetactive <sequence_index (0 based index)> : (activate | enable a sequence)\nsetstepindex <index (0 based index), sequence (0 based index, optional (0. = default))> : set the active step for the sequence. \nadvance <sequence_index  (0 based index)> : advance a sequence one step\n\n"
+								}
+
+							}
+ ],
+						"lines" : [  ]
+					}
+,
+					"patching_rect" : [ 416.0, 88.0, 77.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"description" : "",
+						"digest" : "",
+						"globalpatchername" : "",
+						"tags" : ""
+					}
+,
+					"text" : "p commands"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-10",
 					"maxclass" : "live.line",
@@ -74,7 +188,9 @@
 					"presentation_rect" : [ 267.0, 302.0, 15.0, 15.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_initial_enable" : 1,
 							"parameter_mmax" : 1,
+							"parameter_initial" : [ 1.0 ],
 							"parameter_shortname" : "live.toggle[5]",
 							"parameter_enum" : [ "off", "on" ],
 							"parameter_type" : 2,
@@ -472,30 +588,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-53",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "int" ],
-					"patching_rect" : [ 882.0, 484.0, 29.5, 22.0 ],
-					"text" : "- 1"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-43",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 3,
-					"outlettype" : [ "bang", "bang", "int" ],
-					"patching_rect" : [ 827.0, 452.0, 75.0, 22.0 ],
-					"text" : "uzi 4"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-19",
 					"maxclass" : "live.tab",
 					"num_lines_patching" : 1,
@@ -677,6 +769,7 @@
 						"tags" : "",
 						"style" : "",
 						"subpatcher_template" : "",
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-18",
@@ -838,7 +931,7 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 353.0, 144.0, 83.0, 76.0 ],
+									"patching_rect" : [ 353.0, 144.0, 85.0, 76.0 ],
 									"text" : "setbgcolor setfillcolor setoffcolor setactivecolor setpulsecolor",
 									"textcolor" : [ 0.996078431372549, 0.996078431372549, 0.996078431372549, 1.0 ]
 								}
@@ -999,7 +1092,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 168.0, 261.0, 52.0, 156.0 ],
-									"text" : "control_fill_handle lcd_bg lcd_frame lcd_control_fg lcd_control_fg_zombie"
+									"text" : "control_fill_handle lcd_bg lcd_frame lcd_control_fg lcd_control_fg_alt"
 								}
 
 							}
@@ -1246,8 +1339,6 @@
 					}
 ,
 					"patching_rect" : [ 393.0, 347.0, 108.0, 22.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 516.0, 179.864622944792586, 108.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1878,7 +1969,9 @@
 					"presentation_rect" : [ 483.0, 468.0, 20.0, 20.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_initial_enable" : 1,
 							"parameter_mmax" : 1,
+							"parameter_initial" : [ 1 ],
 							"parameter_shortname" : "1",
 							"parameter_enum" : [ "off", "on" ],
 							"parameter_type" : 2,
@@ -1904,7 +1997,9 @@
 					"presentation_rect" : [ 457.0, 468.0, 20.0, 20.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_initial_enable" : 1,
 							"parameter_mmax" : 1,
+							"parameter_initial" : [ 1 ],
 							"parameter_shortname" : "1",
 							"parameter_enum" : [ "off", "on" ],
 							"parameter_type" : 2,
@@ -1930,7 +2025,9 @@
 					"presentation_rect" : [ 431.0, 468.0, 20.0, 20.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_initial_enable" : 1,
 							"parameter_mmax" : 1,
+							"parameter_initial" : [ 1 ],
 							"parameter_shortname" : "1",
 							"parameter_enum" : [ "off", "on" ],
 							"parameter_type" : 2,
@@ -1956,7 +2053,9 @@
 					"presentation_rect" : [ 405.0, 468.0, 20.0, 20.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
+							"parameter_initial_enable" : 1,
 							"parameter_mmax" : 1,
+							"parameter_initial" : [ 1 ],
 							"parameter_shortname" : "1",
 							"parameter_enum" : [ "off", "on" ],
 							"parameter_type" : 2,
@@ -2212,23 +2311,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-43", 0 ],
-					"order" : 1,
-					"source" : [ "obj-23", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-70", 0 ],
-					"order" : 4,
-					"source" : [ "obj-23", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-71", 0 ],
 					"order" : 3,
 					"source" : [ "obj-23", 0 ]
 				}
@@ -2236,8 +2319,16 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-74", 0 ],
+					"destination" : [ "obj-71", 0 ],
 					"order" : 2,
+					"source" : [ "obj-23", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-74", 0 ],
+					"order" : 1,
 					"source" : [ "obj-23", 0 ]
 				}
 
@@ -2324,13 +2415,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
 					"source" : [ "obj-42", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-53", 0 ],
-					"source" : [ "obj-43", 2 ]
 				}
 
 			}
@@ -2552,8 +2636,8 @@
 			"obj-58" : [ "thickness", "thickness", 0 ],
 			"obj-38" : [ "live.tab[3]", "live.tab", 0 ],
 			"obj-12" : [ "spacing", "spacing", 0 ],
-			"obj-52" : [ "jsui[2]", "jsui[2]", 0 ],
 			"obj-13" : [ "offthickness", "offthickness", 0 ],
+			"obj-52" : [ "jsui[2]", "jsui[2]", 0 ],
 			"parameterbanks" : 			{
 
 			}
