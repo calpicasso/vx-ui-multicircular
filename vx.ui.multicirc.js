@@ -32,6 +32,7 @@ var roundcorners = 0;
 var drawstepmode = 0;
 var spacing = 1.51; // 1.0
 var offthicknessmul = 1.0; // thickness multiplier when the node is off.
+var patternsmax = 4;
 
 declareattribute("bgcolor");
 declareattribute("showindex");
@@ -42,6 +43,7 @@ declareattribute("thickness");
 declareattribute("spacing");
 declareattribute("roundcorners");
 declareattribute("innerarea");
+declareattribute("patternsmax");
 
 
 //================================================================//
@@ -768,7 +770,7 @@ function setactivecolor(r, g, b, a, sequence)
 function add(numSteps, numPulses, spread) 
 {
 	const numContainers = CircObjectsContainer.length;
-	if (numContainers < 4) 
+	if (numContainers < patternsmax) 
 	{
 		var nobj = new CircObject(numSteps, numPulses, spread);
 		//nobj.active = (numContainers == 0);
@@ -786,8 +788,8 @@ function pop()
 
 function onclick(x,y) 
 {
-	post("mouse", x, y);
-	mgraphics.redraw();
+	//post("mouse", x, y);
+	//mgraphics.redraw();
 }
 
 function paint() 

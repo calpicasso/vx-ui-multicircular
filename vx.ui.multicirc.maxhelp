@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 153.0, 635.0, 688.0 ],
+		"rect" : [ 121.0, 80.0, 847.0, 735.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -66,7 +66,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 413.0, 178.0, 854.0, 675.0 ],
+						"rect" : [ 253.0, 187.0, 854.0, 675.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -95,6 +95,18 @@
 						"subpatcher_template" : "",
 						"boxes" : [ 							{
 								"box" : 								{
+									"id" : "obj-2",
+									"linecount" : 3,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 25.0, 451.0, 476.0, 47.0 ],
+									"text" : "IF YOU NEED TO GO BEYOND THE MAX NUMBER OF PATTERNS OR NEED LESS\n\nsetprop maxpatterns <maximum_number_of_patterns> "
+								}
+
+							}
+, 							{
+								"box" : 								{
 									"fontname" : "Arial",
 									"fontsize" : 11.595186999999999,
 									"id" : "obj-5",
@@ -102,7 +114,7 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 28.0, 335.0, 431.0, 97.0 ],
+									"patching_rect" : [ 25.0, 342.0, 431.0, 97.0 ],
 									"text" : "COLORS :\n\nsetbgcolor <r, g, b, a> : background color (def.: transparent)\nsetfillcolor <r, g, b, a> : frame fill color (the circle frame color)\nsetoffcolor <r, g, b, a> : step off color\nsetpulsecolor <r, g, b, a> : pulse step color\nsetactivecolor <r, g, b, a> : active pulse step color"
 								}
 
@@ -116,7 +128,7 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 28.0, 205.0, 431.0, 110.0 ],
+									"patching_rect" : [ 25.0, 219.0, 431.0, 110.0 ],
 									"text" : "DISPLAY :\n\nsetdrawmode <mode (0 | 1)> (0 = rectangular, 1 = circles)\nspacing <amount (float)>\nthickness <amount (float)>\ninnerarea <amount (float)>\nsetoffthicknessmul <amount (float)>\nroundcorners <yorn (0|1> (works only in 'rectangular' drawmode)"
 								}
 
@@ -126,12 +138,12 @@
 									"fontname" : "Arial",
 									"fontsize" : 11.595186999999999,
 									"id" : "obj-10",
-									"linecount" : 11,
+									"linecount" : 12,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 28.0, 29.0, 713.0, 162.0 ],
-									"text" : "PATTERNS :\n\nclear\nadd (add a default pattern of : 16 4 0)\radd <numsteps (number)> <numpulses (number)> <spread_pulses_or_not (0|1)>;\rpop (pop and remove the last element)\n\nsetactive <sequence_index (0 based index)> : (activate | enable a sequence)\nsetstepindex <index (0 based index), sequence (0 based index, optional (0. = default))> : set the active step for the sequence. \nadvance <sequence_index  (0 based index)> : advance a sequence one step\n\n"
+									"patching_rect" : [ 25.0, 46.0, 714.0, 162.0 ],
+									"text" : "PATTERNS :\n\nclear\nadd (add a default pattern of : 16 4 0)\radd <numsteps (number)> <numpulses (number)> <spread_pulses_or_not (0|1)> (NOTE: the spead option may be used as an euclidean rythm generator, except the rotation option is not there for now)\n\rpop (pop and remove the last element)\n\nsetactive <sequence_index (0 based index)> : (activate | enable a sequence)\nsetstepindex <index (0 based index), sequence (0 based index, optional (0. = default))> : set the active step for the sequence. \nadvance <sequence_index  (0 based index)> : advance a sequence one step"
 								}
 
 							}
@@ -410,14 +422,13 @@
 					"fontname" : "Lato",
 					"fontsize" : 13.0,
 					"id" : "obj-90",
-					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 17.0, 73.0, 388.0, 38.0 ],
+					"patching_rect" : [ 17.0, 73.0, 388.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 24.0, 82.0, 444.0, 22.0 ],
-					"text" : "a circular step view with multiple configurations and up to 4 patterns"
+					"text" : "a circular step view with multiple configurations"
 				}
 
 			}
@@ -445,7 +456,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 17.0, 88.0, 387.75, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 24.0, 112.0, 366.75, 20.0 ],
+					"presentation_rect" : [ 24.0, 116.0, 366.75, 20.0 ],
 					"text" : "---",
 					"textcolor" : [ 0.43921568627451, 0.43921568627451, 0.43921568627451, 1.0 ]
 				}
@@ -690,10 +701,11 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 107.0, 166.0, 450.5, 20.0 ],
+					"patching_rect" : [ 107.0, 166.0, 468.5, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 90.0, 540.0, 449.0, 20.0 ],
-					"text" : "add a <default> pattern = 16 4 0, you can add a maximum of 4 patterns"
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 90.0, 540.0, 449.0, 33.0 ],
+					"text" : "add a <default> pattern = 16 4 0, you can add a maximum of 4 patterns (configurable)"
 				}
 
 			}
@@ -742,7 +754,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 526.0, 148.0, 982.0, 686.0 ],
+						"rect" : [ 336.0, 211.0, 982.0, 686.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -769,7 +781,6 @@
 						"tags" : "",
 						"style" : "",
 						"subpatcher_template" : "",
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-18",
@@ -2636,8 +2647,8 @@
 			"obj-58" : [ "thickness", "thickness", 0 ],
 			"obj-38" : [ "live.tab[3]", "live.tab", 0 ],
 			"obj-12" : [ "spacing", "spacing", 0 ],
-			"obj-13" : [ "offthickness", "offthickness", 0 ],
 			"obj-52" : [ "jsui[2]", "jsui[2]", 0 ],
+			"obj-13" : [ "offthickness", "offthickness", 0 ],
 			"parameterbanks" : 			{
 
 			}
