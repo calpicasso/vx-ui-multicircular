@@ -1,5 +1,14 @@
+/*
+Copyright (C) Charles Al. Picasso 2020.
+Distributed under the MIT License 
+(license terms are at http://opensource.org/licenses/MIT).
+*/
+
 /**
 Multicircular view
+aimed at step sequencer applications.
+or anything involving steps and that need to pack the view 
+in a circular way.
 */
 
 inlets = 1;
